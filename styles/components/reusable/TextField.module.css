@@ -1,0 +1,3 @@
+.container{
+    @apply w-full xl:w-[30.375rem] h-[2.5rem] border-0 bg-primary rounded-[0.48rem] px-10 focus:outline-none placeholder-black font-montserrat font-medium text-[0.811rem];
+}

@@ -1,0 +1,3 @@
+.container{
+    @apply  rounded-[0.625rem]  font-montserrat font-medium text-[1rem];
+}
