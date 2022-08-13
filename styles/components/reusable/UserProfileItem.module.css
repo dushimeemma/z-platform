@@ -1,0 +1,7 @@
+.container {
+  @apply flex items-end mr-10;
+}
+
+.wrapper {
+  @apply -mb-[0.4rem] ml-3 font-montserrat font-medium text-[0.875rem];
+}

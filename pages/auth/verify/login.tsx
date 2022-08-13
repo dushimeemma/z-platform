@@ -21,7 +21,11 @@ const LoginVerification: NextPage = () => {
           <span className={styles.textMedium}>Join ZPlatform today.</span>
           <form className={styles.form}>
             <TextField placeholder='Enter OTP' name='otp' type='password' />
-            <Button label='Login' className='bg-black text-[#F2F8F7]' />
+            <Button
+              label='Login'
+              className='bg-black text-[#F2F8F7]'
+              onClick={() => router.push('/dashboard')}
+            />
           </form>
           <span className={styles.textMedium}>
             Don&#39;t have an account&#63;{' '}
@@ -32,7 +36,7 @@ const LoginVerification: NextPage = () => {
           <Button
             label='Forget password?'
             className='my-2 bg-[#F2F8F7] text-black'
-            onClick={()=>router.push('/auth/forgot_password')}
+            onClick={() => router.push('/auth/forgot_password')}
           />
         </div>
       </div>

@@ -1,0 +1,59 @@
+.container {
+  @apply h-screen w-screen flex;
+}
+
+.sidebar {
+  @apply min-h-screen w-[19.188rem] bg-primary justify-between p-10 items-start flex-col;
+}
+
+.aside {
+  @apply min-h-screen w-full flex flex-col md:block;
+}
+
+.sidebarList {
+  @apply mt-20 mb-3 ml-3 flex items-end  cursor-pointer;
+}
+
+.sidebarListItem {
+  @apply font-montserrat font-bold text-[1.5rem] text-black -mb-[0.65rem];
+}
+
+.logoutCard {
+  @apply ml-3 rounded-[0.938rem] flex justify-around items-center px-5 py-3 bg-white shadow;
+}
+
+.logoutCardText {
+  @apply font-montserrat font-extrabold text-[0.75rem] text-black;
+}
+
+.logout {
+  @apply ml-3 flex justify-center items-center py-2 bg-white mb-5 shadow cursor-pointer;
+}
+
+.asideTop {
+  @apply w-full border-b-black border-b-2 h-[20vh];
+}
+
+.asideAvatarContainer {
+  @apply mx-20 my-5 flex flex-col md:flex-row justify-between items-center;
+}
+
+.asideAvatar {
+  @apply -mt-[7.8rem] z-10 bg-white cursor-pointer;
+}
+
+.username {
+  @apply ml-0 md:ml-20 font-montserrat font-bold text-[1.5rem] text-black text-center;
+}
+
+.userDetailsContainer {
+  @apply mx-auto md:mx-20  flex flex-col items-start  md:flex-row my-2;
+}
+
+.badgeContainer {
+  @apply mx-20  flex flex-col md:flex-row items-center my-2;
+}
+
+.badgeLabel {
+  @apply mx-2 font-montserrat font-bold text-[1rem] text-black;
+}
