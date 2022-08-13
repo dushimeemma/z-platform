@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import Header from '../../components/markup/Head';
 import Logo from '../../components/markup/Logo';
 import Badge from '../../components/reusable/Badge';
 import Button from '../../components/reusable/Button';
@@ -7,10 +9,12 @@ import UserProfileItem from '../../components/reusable/UserProfileItem';
 import styles from '../../styles/pages/dashboard/Dashboard.module.css';
 
 const Dashboard = () => {
+  const router = useRouter();
   const [showLogout, setShowLogout] = useState<boolean>(false);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
   return (
     <>
+      <Header title='Dashboard' />
       <button
         type='button'
         onClick={() => setShowSidebar(!showSidebar)}
@@ -64,7 +68,11 @@ const Dashboard = () => {
               alt='user'
               className={styles.asideAvatar}
             />
-            <Button label='Edit Profile' className='bg-black text-white my-2' />
+            <Button
+              label='Edit Profile'
+              className='bg-black text-white my-2'
+              onClick={() => router.push('/dashboard/edit_profile')}
+            />
           </div>
           <span className={styles.username}>Emmanuel Dushime</span>
           <div className={styles.userDetailsContainer}>
@@ -93,7 +101,11 @@ const Dashboard = () => {
           <div className={styles.badgeContainer}>
             <img src='/assets/icons/verified.png' alt='user' />
             <span className={styles.badgeLabel}>Verified</span>
-            <Badge label='View your docs' className='text-black border-black' />
+            <Badge
+              label='View your docs'
+              className='text-black border-black'
+              onClick={() => router.push('/dashboard/verify_account')}
+            />
           </div>
         </div>
       </div>

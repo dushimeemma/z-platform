@@ -39,7 +39,7 @@
 }
 
 .fileInputText {
-  @apply block font-normal text-[0.75rem] text-center text-black;
+  @apply block font-normal text-[0.75rem] text-center cursor-pointer text-black;
 }
 
 .fileInput {
