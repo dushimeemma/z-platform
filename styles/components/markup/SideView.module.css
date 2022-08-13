@@ -1,0 +1,3 @@
+.logo {
+  @apply w-full md:w-[60%] min-h-[50vh] md:h-screen flex justify-center items-center bg-primary;
+}

@@ -1,26 +1,23 @@
-.container{
+.container {
   @apply flex flex-col md:flex-row justify-center items-center min-h-screen select-none;
 }
-.logo{
-  @apply w-full md:w-[60%] min-h-[50vh] md:h-screen flex justify-center items-center bg-primary;
-}
 
-.formContainer{
+.formContainer {
   @apply w-full md:w-[40%] min-h-screen flex flex-col items-center justify-center;
 }
 
-.formLogo{
+.formLogo {
   @apply w-full md:w-[14.938rem] h-[4.188rem];
 }
 
-.textBold{
+.textBold {
   @apply font-montserrat font-extrabold text-[3rem] text-center;
 }
 
-.textMedium{
-  @apply font-montserrat font-bold text-center text-[1.5rem];
+.textMedium {
+  @apply font-montserrat font-bold text-center text-[1.5rem] mb-5;
 }
 
-.form{
+.form {
   @apply flex flex-col justify-around items-center  w-full px-3 xl:px-0 xl:w-[30.375rem] min-h-[20rem] m-3;
 }
