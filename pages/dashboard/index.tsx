@@ -46,7 +46,10 @@ const Dashboard = () => {
             {showLogout && (
               <div
                 className={styles.logout}
-                onClick={() => setShowLogout(false)}
+                onClick={() => {
+                  setShowLogout(false);
+                  router.push('/auth/login');
+                }}
               >
                 <span className={styles.logoutCardText}>logout</span>
               </div>

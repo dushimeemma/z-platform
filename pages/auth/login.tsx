@@ -21,10 +21,11 @@ const Login: NextPage = () => {
           <span className={styles.textMedium}>Join ZPlatform today.</span>
           <form className={styles.form}>
             <TextField placeholder='Email' name='email' type='email' />
+            <TextField placeholder='Password' name='password' type='password' />
             <Button
-              label='Send verification token'
+              label='Login'
               className='bg-black text-[#F2F8F7]'
-              onClick={()=>router.push('/auth/verify/login')}
+              onClick={()=>router.push('/dashboard')}
             />
           </form>
           <span className={styles.textMedium}>
