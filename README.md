@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Z PLATFORM | IREMBO CODING CHALLENGE
 
-## Getting Started
+## Setup and Installation
 
-First, run the development server:
+- clone the repo `https://github.com/dushimeemma/z-platform.git`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- install dependencies `yarn install`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- setup prisma connection `npx prisma db push`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- open prisma database in your browser `npx prisma studio`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- run the application `yarn start`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Setup Dotenv
 
-## Learn More
+- create .env file in project root directory
+- copy keys in .env.example file, which is in the project root directory and assign values to those keys.
+- you can add more environmenta variables to the .env file
+- to use declared variables, require dotenv at the top of your file `import dotenv from 'dotenv'` and call its method config `dotenv.config()`
+- access environment variable value by using `process.env.KEY_NAME` where `KEY_NAME` is the variable name.
 
-To learn more about Next.js, take a look at the following resources:
+Note: If you make changes that uses environmental variables make sure to add those variables with example values in the .env.example file.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Endpoints
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- SIGNUP : `POST request /api/auth/signup`
+- LOGIN : `POST request /api/auth/login`
+- FORGOT PASSWORD : `POST request /api/auth/forgot_password`
+- RESET PASSWORD : `POST request /api/auth/reset_password`
+- GET USER'S PROFILE : `GET request /api/user/profile`
+- UPDATE PROFILE : `PUT request /api/user/update_profile`
+- VERIFRY ACCOUNT : `PUT request /api/account/verify`
+- APPROVE ACCOUNT : `PUT request /api/account/approve`
