@@ -76,7 +76,7 @@ const forgotPasswordHandler = async (
             <div class="container">
               <div class="wrapper">
                 <span>Dear ${email}</span>
-                <p>Click <a href='http://localhost:3000/auth/reset_password?token=${token}'>here</a> to reset your password</p>
+                <p>Click <a href='${process.env.ENV_URL}/auth/reset_password?token=${token}'>here</a> to reset your password</p>
                 <span>Best regards,</span>
               </div>
             </div>
@@ -94,7 +94,7 @@ const forgotPasswordHandler = async (
         }
         res.status(200).json({
           status: 'ok',
-          message: 'Reset password link sent successfully',
+          message: `Check your email: ${email} to reset your password`,
           token,
           data: checkUser,
         });

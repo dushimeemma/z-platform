@@ -39,7 +39,7 @@
 }
 
 .asideAvatar {
-  @apply -mt-[7.8rem] z-10 bg-white cursor-pointer;
+  @apply -mt-[7.8rem] z-10 bg-white cursor-pointer w-[10rem] h-[10rem] rounded-[5rem];
 }
 
 .username {

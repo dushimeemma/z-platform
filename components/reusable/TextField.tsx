@@ -8,9 +8,19 @@ interface Props {
   name: string;
   type: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  value?: any;
 }
 
-const TextField = ({ className, placeholder, name, type, onChange }: Props) => {
+const TextField = ({
+  className,
+  placeholder,
+  name,
+  type,
+  onChange,
+  onBlur,
+  value,
+}: Props) => {
   return (
     <input
       type={type}
@@ -18,6 +28,8 @@ const TextField = ({ className, placeholder, name, type, onChange }: Props) => {
       placeholder={placeholder}
       className={`${styles.container} ${className}`}
       onChange={onChange}
+      onBlur={onBlur}
+      value={value}
     />
   );
 };

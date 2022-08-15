@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Header from '../../components/markup/Head';
 import Logo from '../../components/markup/Logo';
@@ -7,13 +7,54 @@ import Button from '../../components/reusable/Button';
 import UserProfileItem from '../../components/reusable/UserProfileItem';
 
 import styles from '../../styles/pages/dashboard/Dashboard.module.css';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { AppState } from '../../store/types';
+import Alert from '../../components/reusable/Alert';
+import { logout } from '../../store/actions/auth/auth';
+import { getProfile } from '../../store/actions/profile/profile';
+import moment from 'moment';
+import { approveDocs } from '../../store/actions/verify_account/verify_account';
 
 const Dashboard = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { message: authMessage, isLoading: authLoading } = useSelector(
+    (state: AppState) => state.auth,
+    shallowEqual
+  );
+  const { error } = useSelector(
+    (state: AppState) => state.errors,
+    shallowEqual
+  );
+  const {
+    message: profileMessage,
+    isLoading: profileLoading,
+    user,
+  } = useSelector((state: AppState) => state.profile, shallowEqual);
+
+  const {
+    message: verifyAccountMessage,
+    isLoading: verifyAccountLoading,
+  } = useSelector((state: AppState) => state.verifyAccount, shallowEqual);
+
   const [showLogout, setShowLogout] = useState<boolean>(false);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      router.push('/auth/login');
+    }
+  });
+
+  useEffect(() => {
+    dispatch<any>(getProfile());
+  }, []);
+
   return (
     <>
+      {(error || profileMessage) && (
+        <Alert error={error} message={profileMessage} />
+      )}
       <Header title='Dashboard' />
       <button
         type='button'
@@ -48,6 +89,7 @@ const Dashboard = () => {
                 className={styles.logout}
                 onClick={() => {
                   setShowLogout(false);
+                  dispatch(logout());
                   router.push('/auth/login');
                 }}
               >
@@ -56,7 +98,7 @@ const Dashboard = () => {
             )}
             <div className={styles.logoutCard}>
               <img src='/assets/icons/user_rounded.png' alt='user' />
-              <span className={styles.logoutCardText}>Emmanuel Dushime</span>
+              <span className={styles.logoutCardText}>{user?.name}</span>
               <button type='button' onClick={() => setShowLogout(!showLogout)}>
                 <img src='/assets/icons/dots.png' alt='user' />
               </button>
@@ -67,7 +109,11 @@ const Dashboard = () => {
           <div className={styles.asideTop} />
           <div className={styles.asideAvatarContainer}>
             <img
-              src='/assets/icons/user_rounded_lg.png'
+              src={`${
+                user && user.profileImage
+                  ? user.profileImage
+                  : process.env.NEXT_PUBLIC_SAMPLE_IMAGE_URL
+              }`}
               alt='user'
               className={styles.asideAvatar}
             />
@@ -77,39 +123,72 @@ const Dashboard = () => {
               onClick={() => router.push('/dashboard/edit_profile')}
             />
           </div>
-          <span className={styles.username}>Emmanuel Dushime</span>
+          <span className={styles.username}>{user?.name}</span>
           <div className={styles.userDetailsContainer}>
-            <UserProfileItem
-              src='/assets/icons/gender.png'
-              label='Male'
-              alt='gender'
-            />
-            <UserProfileItem src='/assets/icons/age.png' label='28' alt='age' />
-            <UserProfileItem
-              src='/assets/icons/calender.png'
-              label='October 1 2022'
-              alt='date'
-            />
-            <UserProfileItem
-              src='/assets/icons/marital_status.png'
-              label='Single'
-              alt='marital status'
-            />
-            <UserProfileItem
-              src='/assets/icons/country.png'
-              label='Rwanda'
-              alt='country'
-            />
+            {user && user.gender && (
+              <UserProfileItem
+                src='/assets/icons/gender.png'
+                label={user.gender}
+                alt='gender'
+              />
+            )}
+            {user && user.dateOfBirth && (
+              <UserProfileItem
+                src='/assets/icons/calender.png'
+                label={`${moment(user.dateOfBirth).format('MMM Do YY')}`}
+                alt='date'
+              />
+            )}
+            {/* <UserProfileItem src='/assets/icons/age.png' label='28' alt='age' /> */}
+            {user && user.maritalStatus && (
+              <UserProfileItem
+                src='/assets/icons/marital_status.png'
+                label={user.maritalStatus}
+                alt='marital status'
+              />
+            )}
+            {user && user.nationality && (
+              <UserProfileItem
+                src='/assets/icons/country.png'
+                label={user.nationality}
+                alt='country'
+              />
+            )}
           </div>
-          <div className={styles.badgeContainer}>
-            <img src='/assets/icons/verified.png' alt='user' />
-            <span className={styles.badgeLabel}>Verified</span>
-            <Badge
-              label='View your docs'
-              className='text-black border-black'
-              onClick={() => router.push('/dashboard/verify_account')}
-            />
-          </div>
+          {user && user.isVerified && (
+            <div className={styles.badgeContainer}>
+              <img src='/assets/icons/verified.png' alt='user' />
+              <span className={styles.badgeLabel}>{user.isVerified}</span>
+              <Badge
+                label={
+                  user.isVerified === 'unverified'
+                    ? 'Verify your account'
+                    : user.isVerified === 'pending verification'
+                    ? 'Approve ypur docs'
+                    : 'View your docs'
+                }
+                className={`${
+                  user.isVerified === 'unverified'
+                    ? 'text-[#3043F0] border-[#3043F0]'
+                    : user.isVerified === 'pending verification'
+                    ? 'text-[#FEE102] border-[#FEE102]'
+                    : 'text-black border-black'
+                } `}
+                onClick={() => {
+                  if (user.isVerified === 'unverified') {
+                    router.push('/dashboard/verify_account');
+                  }else  if(user.isVerified === 'pending verification') {
+                    dispatch<any>(approveDocs());
+                    if (verifyAccountMessage == 'account approved successfully') {
+                      router.push('/dashboard');
+                    }
+                  } else {
+                    return;
+                  }
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>
