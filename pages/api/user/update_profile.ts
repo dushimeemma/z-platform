@@ -8,11 +8,13 @@ config();
 
 const updateProfileHandler = async (req: any, res: NextApiResponse) => {
   if (req.method === 'PUT') {
+    const { age } = req.body;
     try {
       const updatedProfile = await prisma.user.update({
         where: { id: req.user.id },
         data: {
           ...req.body,
+          age: Number(age),
         },
       });
       res.status(200).json({

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/markup/Head';
+import Loading from '../../components/markup/Loading';
 import Logo from '../../components/markup/Logo';
 import SideView from '../../components/markup/SideView';
 import Alert from '../../components/reusable/Alert';
@@ -39,9 +40,7 @@ const EditProfile: NextPage = () => {
     dispatch<any>(
       updateProfile({
         ...values,
-        profileImage: image
-          ? image
-          : process.env.NEXT_PUBLIC_SAMPLE_IMAGE_URL,
+        profileImage: image ? image : process.env.NEXT_PUBLIC_SAMPLE_IMAGE_URL,
       })
     );
   };
@@ -56,26 +55,31 @@ const EditProfile: NextPage = () => {
     dispatch<any>(getProfile());
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (profileMessage == 'user profile updated successfully') {
       router.push('/dashboard');
     }
-  },[profileMessage])
+  }, [profileMessage]);
 
   return (
     <>
+      {profileLoading && <Loading />}
       {(error || profileMessage) && (
         <Alert error={error} message={profileMessage} />
       )}
       <Header title='Edit Profile' />
-      <div className={styles.container}>
+      <div
+        className={`${styles.container} ${
+          profileLoading ? 'bg-slate-300' : ''
+        }`}
+      >
         <SideView />
         <div className={`${styles.formContainer}`}>
           <Logo className={styles.formLogo} />
           <span className={`${styles.textMedium} my-10`}>Edit profile</span>
           <Formik
             initialValues={{
-              // profileImage: user?.profileImage,
+              age: user?.age,
               gender: user?.gender,
               dateOfBirth: user?.dateOfBirth,
               maritalStatus: user?.maritalStatus,
@@ -127,6 +131,22 @@ const EditProfile: NextPage = () => {
                   />
                   {touched.name && errors.name && (
                     <span className='text-red-600'>{errors.name}</span>
+                  )}
+                </div>
+                <div className='my-3' />
+                <div>
+                  <TextField
+                    placeholder={`${
+                      user && user.age ? user.age : 'Enter your age'
+                    }`}
+                    name='age'
+                    type='text'
+                    onBlur={handleBlur('age')}
+                    onChange={handleChange('age')}
+                    value={values.age}
+                  />
+                  {touched.age && errors.age && (
+                    <span className='text-red-600'>{errors.age}</span>
                   )}
                 </div>
                 <div className='my-3' />

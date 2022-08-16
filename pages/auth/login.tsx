@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/markup/Head';
+import Loading from '../../components/markup/Loading';
 import Logo from '../../components/markup/Logo';
 import SideView from '../../components/markup/SideView';
 import Alert from '../../components/reusable/Alert';
@@ -48,9 +49,10 @@ const Login: NextPage = () => {
   });
   return (
     <>
+      {isLoading && <Loading />}
       {(error || message) && <Alert error={error} message={message} />}
       <Header title='Login' />
-      <div className={styles.container}>
+      <div className={`${styles.container} ${isLoading ? 'bg-slate-300' : ''}`}>
         <SideView />
         <div className={styles.formContainer}>
           <Logo className={styles.formLogo} />

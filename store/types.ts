@@ -27,6 +27,7 @@ export interface Profile {
     identity: string;
     gender: string;
     dateOfBirth: string;
+    age: number;
     maritalStatus: string;
     nationality: string;
     isVerified: string;

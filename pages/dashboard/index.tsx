@@ -14,6 +14,7 @@ import { logout } from '../../store/actions/auth/auth';
 import { getProfile } from '../../store/actions/profile/profile';
 import moment from 'moment';
 import { approveDocs } from '../../store/actions/verify_account/verify_account';
+import Loading from '../../components/markup/Loading';
 
 const Dashboard = () => {
   const router = useRouter();
@@ -32,10 +33,8 @@ const Dashboard = () => {
     user,
   } = useSelector((state: AppState) => state.profile, shallowEqual);
 
-  const {
-    message: verifyAccountMessage,
-    isLoading: verifyAccountLoading,
-  } = useSelector((state: AppState) => state.verifyAccount, shallowEqual);
+  const { message: verifyAccountMessage, isLoading: verifyAccountLoading } =
+    useSelector((state: AppState) => state.verifyAccount, shallowEqual);
 
   const [showLogout, setShowLogout] = useState<boolean>(false);
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
@@ -52,6 +51,7 @@ const Dashboard = () => {
 
   return (
     <>
+      {profileLoading && verifyAccountLoading && <Loading />}
       {(error || profileMessage) && (
         <Alert error={error} message={profileMessage} />
       )}
@@ -63,7 +63,11 @@ const Dashboard = () => {
       >
         <img src='/assets/icons/dots.png' alt='user' />
       </button>
-      <div className={styles.container}>
+      <div
+        className={`${styles.container} ${
+          profileLoading && verifyAccountLoading ? 'bg-slate-300' : ''
+        }`}
+      >
         <div
           className={`${styles.sidebar} ${
             showSidebar ? 'fixed top-0 left-0 z-20' : 'hidden'
@@ -139,7 +143,14 @@ const Dashboard = () => {
                 alt='date'
               />
             )}
-            {/* <UserProfileItem src='/assets/icons/age.png' label='28' alt='age' /> */}
+            {user && user.age && (
+              <UserProfileItem
+                src='/assets/icons/age.png'
+                label={`${user.age}`}
+                alt='age'
+              />
+            )}
+
             {user && user.maritalStatus && (
               <UserProfileItem
                 src='/assets/icons/marital_status.png'
@@ -164,7 +175,7 @@ const Dashboard = () => {
                   user.isVerified === 'unverified'
                     ? 'Verify your account'
                     : user.isVerified === 'pending verification'
-                    ? 'Approve ypur docs'
+                    ? 'Approve your docs'
                     : 'View your docs'
                 }
                 className={`${
@@ -177,10 +188,13 @@ const Dashboard = () => {
                 onClick={() => {
                   if (user.isVerified === 'unverified') {
                     router.push('/dashboard/verify_account');
-                  }else  if(user.isVerified === 'pending verification') {
+                  } else if (user.isVerified === 'pending verification') {
                     dispatch<any>(approveDocs());
-                    if (verifyAccountMessage == 'account approved successfully') {
+                    if (
+                      verifyAccountMessage == 'account approved successfully'
+                    ) {
                       router.push('/dashboard');
+                      dispatch<any>(getProfile());
                     }
                   } else {
                     return;

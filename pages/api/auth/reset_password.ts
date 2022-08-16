@@ -47,7 +47,7 @@ const resetPasswordHandler = async (
 
       res.status(200).json({
         status: 'ok',
-        message: 'Passport reset successfully',
+        message: 'Password reset successfully',
         data: { ...updatedUser },
       });
     } catch (error) {

@@ -1,16 +1,9 @@
 # Z PLATFORM | IREMBO CODING CHALLENGE
 
-## Setup and Installation
+## Prerequisites
 
-- clone the repo `https://github.com/dushimeemma/z-platform.git`
-
-- install dependencies `yarn install`
-
-- setup prisma connection `npx prisma db push`
-
-- open prisma database in your browser `npx prisma studio`
-
-- run the application `yarn start`
+- nodejs
+- yarn [optional]
 
 ## Setup Dotenv
 
@@ -21,6 +14,20 @@
 - access environment variable value by using `process.env.KEY_NAME` where `KEY_NAME` is the variable name.
 
 Note: If you make changes that uses environmental variables make sure to add those variables with example values in the .env.example file.
+
+## Setup and Installation
+
+- clone the repo `https://github.com/dushimeemma/z-platform.git`
+
+- install dependencies `yarn install`
+
+- setup prisma connection `npx prisma db push`
+
+- open prisma database in your browser `npx prisma studio`
+
+- setup firebase storage `firebase init` and choose `firebase storage`
+
+- run the application `yarn start`
 
 ## Endpoints
 

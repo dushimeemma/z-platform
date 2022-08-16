@@ -17,6 +17,7 @@ model User {
   identity      String?
   gender        String?
   dateOfBirth   String?  @map(name: "date_of_birth")
+  age           Int?
   maritalStatus String?  @map(name: "marital_status")
   nationality   String?
   isVerified    String?  @map(name: "is_verified")

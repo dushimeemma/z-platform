@@ -15,6 +15,7 @@ import { AppState } from '../../store/types';
 import { authenicateUser, UserProps } from '../../store/actions/auth/auth';
 import { clearErrors } from '../../store/actions/errors/errors';
 import Alert from '../../components/reusable/Alert';
+import Loading from '../../components/markup/Loading';
 
 const Signup: NextPage = () => {
   const router = useRouter();
@@ -49,14 +50,12 @@ const Signup: NextPage = () => {
 
   return (
     <>
-      {(error || message) && (
-        <Alert
-          error={error}
-          message={message}
-        />
-      )}
+      {isLoading && <Loading />}
+      {(error || message) && <Alert error={error} message={message} />}
       <Header title='Signup' />
-      <div className={styles.container}>
+      <div
+        className={`${styles.container} ${isLoading ? 'bg-slate-300' : ''}`}
+      >
         <SideView />
         <div className={styles.formContainer}>
           <Logo className={styles.formLogo} />
