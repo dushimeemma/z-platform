@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/markup/Head';
-import Loading from '../../components/markup/Loading';
 import Logo from '../../components/markup/Logo';
 import SideView from '../../components/markup/SideView';
 import Alert from '../../components/reusable/Alert';
@@ -52,10 +51,9 @@ const ResetPassword: NextPage = () => {
 
   return (
     <>
-     {isLoading && <Loading />}
       {(error || message) && <Alert error={error} message={message} />}
       <Header title='Reset Password' />
-      <div  className={`${styles.container} ${isLoading ? 'bg-slate-300' : ''}`}>
+      <div className={styles.container}>
         <SideView />
         <div className={styles.formContainer}>
           <Logo className={styles.formLogo} />
@@ -107,6 +105,7 @@ const ResetPassword: NextPage = () => {
                   label='Save'
                   className='bg-black text-[#F2F8F7]'
                   type='submit'
+                  isLoading={isLoading}
                 />
               </form>
             )}

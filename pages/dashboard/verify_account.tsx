@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/markup/Head';
-import Loading from '../../components/markup/Loading';
 import Logo from '../../components/markup/Logo';
 import SideView from '../../components/markup/SideView';
 import Button from '../../components/reusable/Button';
@@ -56,13 +55,8 @@ const VerifyAccount: NextPage = () => {
   }, [verifyAccountMessage]);
   return (
     <>
-      {verifyAccountLoading && !authLoading && <Loading />}
       <Header title='Verify Account' />
-      <div
-        className={`${styles.container} ${
-          verifyAccountLoading && !authLoading ? 'bg-slate-300' : ''
-        }`}
-      >
+      <div className={styles.container}>
         <SideView />
         <div className={`${styles.formContainer}`}>
           <Logo className={styles.formLogo} />
@@ -108,7 +102,7 @@ const VerifyAccount: NextPage = () => {
                             className={`z-20 ${styles.fileInputTitleContainer}`}
                           >
                             <span className={styles.fileInputText}>
-                              Drop your profile image
+                              Drop your identity
                             </span>
                           </div>
                         </div>
@@ -133,6 +127,7 @@ const VerifyAccount: NextPage = () => {
                   label='Save'
                   className='bg-black text-[#F2F8F7]'
                   type='submit'
+                  isLoading={verifyAccountLoading && !authLoading}
                 />
               </form>
             )}

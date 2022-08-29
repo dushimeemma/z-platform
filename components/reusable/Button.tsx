@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { CircularProgress } from '@mui/material';
+
 import styles from '../../styles/components/reusable/Button.module.css';
 
 interface Props {
@@ -8,6 +10,7 @@ interface Props {
   className: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  isLoading?:boolean;
 }
 
 const Button = ({
@@ -16,6 +19,7 @@ const Button = ({
   onClick,
   type = 'button',
   disabled = false,
+  isLoading = false,
 }: Props) => {
   return (
     <button
@@ -24,7 +28,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {label}
+      {!isLoading ? label: <CircularProgress color="inherit" />}
     </button>
   );
 };

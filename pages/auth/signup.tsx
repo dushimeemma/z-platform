@@ -15,7 +15,6 @@ import { AppState } from '../../store/types';
 import { authenicateUser, UserProps } from '../../store/actions/auth/auth';
 import { clearErrors } from '../../store/actions/errors/errors';
 import Alert from '../../components/reusable/Alert';
-import Loading from '../../components/markup/Loading';
 
 const Signup: NextPage = () => {
   const router = useRouter();
@@ -50,12 +49,9 @@ const Signup: NextPage = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
       {(error || message) && <Alert error={error} message={message} />}
       <Header title='Signup' />
-      <div
-        className={`${styles.container} ${isLoading ? 'bg-slate-300' : ''}`}
-      >
+      <div className={styles.container}>
         <SideView />
         <div className={styles.formContainer}>
           <Logo className={styles.formLogo} />
@@ -119,6 +115,7 @@ const Signup: NextPage = () => {
                   label='Signup'
                   className='bg-black text-[#F2F8F7]'
                   type='submit'
+                  isLoading={isLoading}
                 />
               </form>
             )}

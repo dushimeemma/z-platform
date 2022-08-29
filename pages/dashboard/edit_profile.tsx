@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/markup/Head';
-import Loading from '../../components/markup/Loading';
 import Logo from '../../components/markup/Logo';
 import SideView from '../../components/markup/SideView';
 import Alert from '../../components/reusable/Alert';
@@ -63,16 +62,11 @@ const EditProfile: NextPage = () => {
 
   return (
     <>
-      {profileLoading && <Loading />}
       {(error || profileMessage) && (
         <Alert error={error} message={profileMessage} />
       )}
       <Header title='Edit Profile' />
-      <div
-        className={`${styles.container} ${
-          profileLoading ? 'bg-slate-300' : ''
-        }`}
-      >
+      <div className={styles.container}>
         <SideView />
         <div className={`${styles.formContainer}`}>
           <Logo className={styles.formLogo} />
@@ -242,6 +236,7 @@ const EditProfile: NextPage = () => {
                   label='Save'
                   className='bg-black text-[#F2F8F7]'
                   type='submit'
+                  isLoading={profileLoading}
                 />
               </form>
             )}

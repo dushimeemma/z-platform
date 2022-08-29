@@ -14,7 +14,6 @@ import { logout } from '../../store/actions/auth/auth';
 import { getProfile } from '../../store/actions/profile/profile';
 import moment from 'moment';
 import { approveDocs } from '../../store/actions/verify_account/verify_account';
-import Loading from '../../components/markup/Loading';
 
 const Dashboard = () => {
   const router = useRouter();
@@ -51,7 +50,6 @@ const Dashboard = () => {
 
   return (
     <>
-      {profileLoading && verifyAccountLoading && <Loading />}
       {(error || profileMessage) && (
         <Alert error={error} message={profileMessage} />
       )}
@@ -64,9 +62,7 @@ const Dashboard = () => {
         <img src='/assets/icons/dots.png' alt='user' />
       </button>
       <div
-        className={`${styles.container} ${
-          profileLoading && verifyAccountLoading ? 'bg-slate-300' : ''
-        }`}
+        className={styles.container}
       >
         <div
           className={`${styles.sidebar} ${
