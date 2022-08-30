@@ -48,6 +48,9 @@ const Dashboard = () => {
     dispatch<any>(getProfile());
   }, []);
 
+  console.log({ user });
+  
+
   return (
     <>
       {(error || profileMessage) && (

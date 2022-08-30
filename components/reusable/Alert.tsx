@@ -17,6 +17,7 @@ const Alert = ({ onClick, error, message }: AlertProps) => {
   return (
     show ? (
       <span
+        data-testid="alert-test-id"
         onClick={onClick}
         className={`fixed bottom-5 left-5 px-5 py-2 cursor-pointer z-40 bg-white ${
           error
