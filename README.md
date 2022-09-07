@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/dushimeemma/z-platform/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/dushimeemma/z-platform/tree/main)
+
 # Z PLATFORM | IREMBO CODING CHALLENGE
 
 ## Prerequisites
