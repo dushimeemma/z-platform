@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import { Formik } from 'formik';
 import moment from 'moment';
 import type { NextPage } from 'next';
@@ -21,6 +22,8 @@ const EditProfile: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [image, setImage] = useState<string>('');
+  const [isLoadingUploadingFile, setIsLoadingUploadingFile] =
+    useState<boolean>(false);
   const { message: authMessage, isLoading: authLoading } = useSelector(
     (state: AppState) => state.auth,
     shallowEqual
@@ -112,8 +115,7 @@ const EditProfile: NextPage = () => {
                 </div>
 
                 <div className='my-3' />
-                {/* <TextField placeholder='Male' name='name' type='text' />
-  <div className='my-3' /> */}
+
                 <div>
                   <TextField
                     placeholder={`${user?.name}`}
@@ -207,13 +209,23 @@ const EditProfile: NextPage = () => {
                     <div className='w-full mb-5'>
                       <div className={styles.fileInputWrapper}>
                         <div className='absolute'>
-                          <div
-                            className={`z-20 ${styles.fileInputTitleContainer}`}
-                          >
-                            <span className={styles.fileInputText}>
-                              Drop your profile image
-                            </span>
-                          </div>
+                          {image !== '' && !isLoadingUploadingFile && (
+                            <img src={image} className={styles.avatar} />
+                          )}
+                          {isLoadingUploadingFile && (
+                            <div className={styles.spinner}>
+                              <CircularProgress size={15} color='inherit' />
+                            </div>
+                          )}
+                          {image === '' && (
+                            <div
+                              className={`z-20 ${styles.fileInputTitleContainer}`}
+                            >
+                              <span className={styles.fileInputText}>
+                                Drop your profile image
+                              </span>
+                            </div>
+                          )}
                         </div>
                         <input
                           className={styles.fileInput}
@@ -221,9 +233,11 @@ const EditProfile: NextPage = () => {
                           accept='.png, .jpg, .jpeg, .svg'
                           placeholder='url'
                           onChange={async (e) => {
+                            setIsLoadingUploadingFile(true);
                             const imageUrl = await handleFileUpload(
                               e.target.files
                             );
+                            setIsLoadingUploadingFile(false);
                             setImage(imageUrl);
                           }}
                         />

@@ -1,3 +1,4 @@
+import { CircularProgress } from '@mui/material';
 import { Formik } from 'formik';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -19,6 +20,8 @@ const VerifyAccount: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [image, setImage] = useState<string>('');
+  const [isLoadingUploadingFile, setIsLoadingUploadingFile] =
+    useState<boolean>(false);
   const { message: authMessage, isLoading: authLoading } = useSelector(
     (state: AppState) => state.auth,
     shallowEqual
@@ -98,13 +101,25 @@ const VerifyAccount: NextPage = () => {
                     <div className='w-full mb-5'>
                       <div className={styles.fileInputWrapper}>
                         <div className='absolute'>
-                          <div
-                            className={`z-20 ${styles.fileInputTitleContainer}`}
-                          >
+                          {image !== '' && !isLoadingUploadingFile && (
                             <span className={styles.fileInputText}>
-                              Drop your identity
+                              Docs uploaded
                             </span>
-                          </div>
+                          )}
+                          {isLoadingUploadingFile && (
+                            <div className={styles.spinner}>
+                              <CircularProgress size={15} color='inherit' />
+                            </div>
+                          )}
+                          {image === '' && (
+                            <div
+                              className={`z-20 ${styles.fileInputTitleContainer}`}
+                            >
+                              <span className={styles.fileInputText}>
+                                Drop your profile image
+                              </span>
+                            </div>
+                          )}
                         </div>
                         <input
                           className={styles.fileInput}
@@ -112,9 +127,11 @@ const VerifyAccount: NextPage = () => {
                           accept='.pdf'
                           placeholder='url'
                           onChange={async (e) => {
+                            setIsLoadingUploadingFile(true);
                             const imageUrl = await handleDocsUpload(
                               e.target.files
                             );
+                            setIsLoadingUploadingFile(false);
                             setImage(imageUrl);
                           }}
                         />

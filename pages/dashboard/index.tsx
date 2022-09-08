@@ -48,9 +48,6 @@ const Dashboard = () => {
     dispatch<any>(getProfile());
   }, []);
 
-  console.log({ user });
-  
-
   return (
     <>
       {(error || profileMessage) && (
@@ -64,9 +61,7 @@ const Dashboard = () => {
       >
         <img src='/assets/icons/dots.png' alt='user' />
       </button>
-      <div
-        className={styles.container}
-      >
+      <div className={styles.container}>
         <div
           className={`${styles.sidebar} ${
             showSidebar ? 'fixed top-0 left-0 z-20' : 'hidden'
@@ -100,7 +95,15 @@ const Dashboard = () => {
               </div>
             )}
             <div className={styles.logoutCard}>
-              <img src='/assets/icons/user_rounded.png' alt='user' />
+              <img
+                src={`${
+                  user && user.profileImage
+                    ? user.profileImage
+                    : '/assets/icons/user_rounded.png'
+                }`}
+                alt='user'
+                className='mr-3 w-[3rem] h-[3rem] rounded-[1.5rem]'
+              />
               <span className={styles.logoutCardText}>{user?.name}</span>
               <button type='button' onClick={() => setShowLogout(!showLogout)}>
                 <img src='/assets/icons/dots.png' alt='user' />
